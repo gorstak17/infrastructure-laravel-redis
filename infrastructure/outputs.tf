@@ -22,3 +22,7 @@ output "vpc_nat_gateway_id" {
   description = "The single NAT Gateway ID"
   value       = module.vpc.nat_gateway_id
 }
+
+output "task_execution_role_arn" {
+  value = module.iam.task_execution_role_arn
+}

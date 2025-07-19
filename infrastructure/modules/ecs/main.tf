@@ -20,6 +20,8 @@ resource "aws_ecs_task_definition" "app" {
   cpu                      = "256"
   memory                   = "512"
   execution_role_arn       = var.execution_role_arn
+  task_role_arn            = var.task_role_arn
+
 
   container_definitions = jsonencode([
     {
@@ -32,58 +34,58 @@ resource "aws_ecs_task_definition" "app" {
           protocol      = "tcp"
         }
       ]
-environment = [
-      {
-        name  = "APP_KEY"
-        value = var.app_key
-      },
-      {
-        name  = "APP_ENV"
-        value = var.app_env
-      },
-      {
-        name  = "APP_DEBUG"
-        value = tostring(var.app_debug)
-      },
-      {
-        name  = "APP_URL"
-        value = var.app_url
-      },
-      {
-        name  = "CACHE_DRIVER"
-        value = var.cache_driver          # "redis"
-      },
-      {
-        name  = "SESSION_DRIVER"
-        value = var.session_driver        # "redis"
-      },
-      {
-        name  = "QUEUE_CONNECTION"
-        value = var.queue_connection      # "redis"
-      },
+      environment = [
+        {
+          name  = "APP_KEY"
+          value = ""
+        },
+        {
+          name  = "APP_ENV"
+          value = var.app_env
+        },
+        {
+          name  = "APP_DEBUG"
+          value = tostring(var.app_debug)
+        },
+        {
+          name  = "APP_URL"
+          value = var.app_url
+        },
+        {
+          name  = "CACHE_DRIVER"
+          value = var.cache_driver
+        },
+        {
+          name  = "SESSION_DRIVER"
+          value = var.session_driver
+        },
+        {
+          name  = "QUEUE_CONNECTION"
+          value = var.queue_connection
+        },
 
-      {
-        name  = "REDIS_CLIENT"
-        value = var.redis_client          # "phpredis"
-      },
-      {
-        name  = "REDIS_HOST"
-        value = var.redis_endpoint        # your ElastiCache endpoint
-      },
-      {
-        name  = "REDIS_PASSWORD"
-        value = var.redis_password        # "" if none
-      },
-      {
-        name  = "REDIS_PORT"
-        value = tostring(var.redis_port)  # 6379
-      },
+        {
+          name  = "REDIS_CLIENT"
+          value = var.redis_client
+        },
+        {
+          name  = "REDIS_HOST"
+          value = ""
+        },
+        {
+          name  = "REDIS_PASSWORD"
+          value = var.redis_password
+        },
+        {
+          name  = "REDIS_PORT"
+          value = tostring(var.redis_port) # 6379
+        },
 
-      {
-        name  = "MAIL_MAILER"
-        value = var.mail_mailer
-      }
-]
+        {
+          name  = "MAIL_MAILER"
+          value = var.mail_mailer
+        }
+      ]
 
 
       logConfiguration = {
@@ -108,12 +110,12 @@ resource "aws_lb" "main" {
 }
 
 resource "aws_lb_target_group" "app" {
-  name     = "${var.app_name}-tg"
-  port     = 8000
-  protocol = "HTTP"
+  name        = "${var.app_name}-tg"
+  port        = 8000
+  protocol    = "HTTP"
   target_type = "ip"
 
-  vpc_id   = var.vpc_id
+  vpc_id = var.vpc_id
 
   health_check {
     path                = "/"
@@ -144,8 +146,8 @@ resource "aws_ecs_service" "app" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = var.private_subnet_ids
-    security_groups = [var.ecs_sg_id]
+    subnets          = var.private_subnet_ids
+    security_groups  = [var.ecs_sg_id]
     assign_public_ip = false
   }
 

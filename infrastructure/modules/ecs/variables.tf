@@ -1,3 +1,4 @@
+
 variable "vpc_id" {
   description = "VPC ID"
 }
@@ -93,5 +94,10 @@ variable "redis_port" {
 
 variable "mail_mailer" {
   description = "Mail driver"
+  type        = string
+}
+
+variable "task_role_arn" {
+  description = "IAM Role ARN for the ECS Task (app level permissions incl. SSM)"
   type        = string
 }
