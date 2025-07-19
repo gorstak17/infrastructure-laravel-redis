@@ -191,22 +191,54 @@ aws ecs update-service   --cluster ${CLUSTER_NAME}   --service ${SERVICE_NAME}  
 
 ## 🌐 5. Networking Overview
 
-```text
- Internet
-    ↓ HTTP 80
- [ALB in Public Subnets]
-    ↓ (ENI)
- [ECS Tasks in Private Subnets] → [ElastiCache Redis]
-     ↑
-     └── NAT Gateway ───→ Internet (for SSM & ECR pulls)
-```
+The architecture is built within a dedicated **VPC** featuring both **public** and **private subnets** across multiple Availability Zones for high availability and security.
+
+````text
+                +-------------------+
+                |    Internet        |
+                +-------------------+
+                          │
+                       HTTP 80/443
+                          │
+                +-------------------+
+                |  Application Load  |
+                |    Balancer (ALB)  |
+                |  [Public Subnet]   |
+                +-------------------+
+                          │
+                       Target Group
+                          │
+            +---------------------------+
+            | ECS Tasks (Laravel App)    |
+            |     [Private Subnets]      |
+            +---------------------------+
+                   │                │
+            Redis Queries       Outbound HTTPS
+                   │                │
+     +-----------------+    +---------------------+
+     | ElastiCache Redis|    |  NAT Gateway        |
+     | [Private Subnet] |    |  [Public Subnet]    |
+     +-----------------+    +---------------------+
+                                  │
+                             +----------+
+                             | Internet |
+                             +----------+
 
 - **Public Subnets:** ALB, NAT Gateway
 - **Private Subnets:** ECS Tasks, Redis
 - **Security Groups:**
-  - ALB → ECS on port 8000
-  - ECS → Redis on port 6379
-  - ECS → Internet for SSM/ECR access
+  - **ALB → ECS:**
+    - Inbound: ALB allows HTTP (80) and HTTPS (443) from the internet
+    - Outbound: ALB forwards traffic to ECS tasks on **port 8000**
+
+  - **ECS → Redis:**
+    - ECS tasks can access **ElastiCache Redis** on **port 6379** (within private subnets)
+
+  - **ECS → Internet:**
+    - ECS tasks access the internet **via NAT Gateway** for:
+      - Fetching secrets from **AWS SSM Parameter Store**
+      - Pulling Docker images from **Amazon ECR**
+      - Sending logs to **CloudWatch Logs**
 
 ---
 
@@ -233,4 +265,4 @@ aws ecs update-service   --cluster ${CLUSTER_NAME}   --service ${SERVICE_NAME}  
 
    ```bash
    ./scripts/build_and_push.sh
-   ```
+````
