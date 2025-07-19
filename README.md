@@ -272,9 +272,9 @@ aws ecs update-service   --cluster ${CLUSTER_NAME}   --service ${SERVICE_NAME}  
 
 ### ✅ Steps:
 
-1. Checkout the repository
-2. Use `aws-actions/configure-aws-credentials@v2` with GitHub secrets
-3. Execute deploy script:
+1. Code is checked out automatically by the pipeline
+2. AWS credentials are configured via aws-actions/configure-aws-credentials@v2 using stored GitHub Secrets
+3. The pipeline executes the deployment script (build_and_push.sh), which builds the Docker image, pushes to ECR, and updates ECS service
 
    ```bash
    ./scripts/build_and_push.sh
