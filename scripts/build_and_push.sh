@@ -10,7 +10,7 @@ CLUSTER_NAME="laravel-counter-cluster"
 SERVICE_NAME="laravel-counter-service"
 
 echo "👉 Building Docker image for linux/amd64..."
-DOCKER_BUILDKIT=0 docker build --platform linux/amd64 -t ${ECR_REPO_NAME}:${IMAGE_TAG} .
+DOCKER_BUILDKIT=0 docker build --platform linux/amd64 -t ${ECR_REPO_NAME}:${IMAGE_TAG} ./laravel-counter
 
 echo "👉 Tagging image for ECR push..."
 docker tag ${ECR_REPO_NAME}:${IMAGE_TAG} ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:${IMAGE_TAG}
@@ -21,11 +21,17 @@ aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS 
 echo "👉 Pushing image to ECR..."
 docker push ${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO_NAME}:${IMAGE_TAG}
 
-echo "👉 Forcing new ECS deployment..."
+echo "👉 New ECS deployment started..."
 aws ecs update-service \
   --cluster ${CLUSTER_NAME} \
   --service ${SERVICE_NAME} \
   --force-new-deployment \
   --region ${AWS_REGION}
 
-echo "Deployment complete."
+aws ecs wait stable-service \
+  --cluster ${CLUSTER_NAME} \
+  --service ${SERVICE_NAME} \
+  --force-new-deployment \
+  --region ${AWS_REGION}
+
+echo "Deployment complete and service stable!"
