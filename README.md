@@ -191,9 +191,7 @@ aws ecs update-service   --cluster ${CLUSTER_NAME}   --service ${SERVICE_NAME}  
 
 ## 🌐 5. Networking Overview
 
-The architecture is built within a dedicated **VPC** featuring both **public** and **private subnets** across multiple Availability Zones for high availability and security.
-
-````text
+```text
                 +-------------------+
                 |    Internet        |
                 +-------------------+
@@ -223,22 +221,37 @@ The architecture is built within a dedicated **VPC** featuring both **public** a
                              +----------+
                              | Internet |
                              +----------+
+```
 
-- **Public Subnets:** ALB, NAT Gateway
-- **Private Subnets:** ECS Tasks, Redis
-- **Security Groups:**
+- **Public Subnets:**  
+  Host the **Application Load Balancer (ALB)** and **NAT Gateway**.
+
+  - The ALB is exposed to the internet, listening on ports **80 (HTTP)** and optionally **443 (HTTPS)**.
+  - The NAT Gateway enables resources in private subnets to access the internet securely without being exposed.
+
+- **Private Subnets:**  
+  Host compute and data resources that should not be publicly accessible:
+
+  - **ECS Tasks (Laravel app containers):** Handle application logic and business operations.
+  - **ElastiCache Redis:** Provides fast, in-memory data caching for the Laravel app.
+
+- **Security Groups (Firewall rules at instance/network interface level):**
+
   - **ALB → ECS:**
-    - Inbound: ALB allows HTTP (80) and HTTPS (443) from the internet
-    - Outbound: ALB forwards traffic to ECS tasks on **port 8000**
+
+    - ALB forwards incoming traffic from the internet to ECS tasks on **port 8000**, where the Laravel app listens.
 
   - **ECS → Redis:**
-    - ECS tasks can access **ElastiCache Redis** on **port 6379** (within private subnets)
+
+    - ECS tasks can communicate with Redis only on **port 6379**, ensuring cache communication is isolated within the private network.
 
   - **ECS → Internet:**
-    - ECS tasks access the internet **via NAT Gateway** for:
-      - Fetching secrets from **AWS SSM Parameter Store**
-      - Pulling Docker images from **Amazon ECR**
-      - Sending logs to **CloudWatch Logs**
+    - ECS tasks connect to the internet via the **NAT Gateway** for:
+      - **AWS SSM Parameter Store:** Retrieve secrets like `app_key` and Redis endpoint at runtime.
+      - **Amazon ECR:** Pull the latest Docker image versions during task startup.
+      - **CloudWatch Logs:** Push application logs for monitoring and observability.
+
+> 🔐 All traffic between services is tightly controlled by security group rules to ensure **least-privilege access** and protect the network from unnecessary exposure.
 
 ---
 
@@ -265,4 +278,4 @@ The architecture is built within a dedicated **VPC** featuring both **public** a
 
    ```bash
    ./scripts/build_and_push.sh
-````
+   ```
