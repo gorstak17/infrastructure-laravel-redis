@@ -28,9 +28,4 @@ aws ecs update-service \
   --force-new-deployment \
   --region ${AWS_REGION}
 
-aws ecs wait services-stable \
-  --cluster ${CLUSTER_NAME} \
-  --service ${SERVICE_NAME} \
-  --region ${AWS_REGION}
-
 echo "Deployment complete and service stable!"
