@@ -1,12 +1,10 @@
-app_name       = "laravel-counter"
-app_env        = "production"
-app_debug      = false
-app_url        = "http://your-alb-dns/"
-app_debug      = false
-aws_region     = "us-east-1"
-cache_driver     = "redis"
-session_driver   = "redis"
-queue_connection = "redis"
-redis_password = ""
-redis_port     = 6379
-mail_mailer = "log" # disables real email sending
+app_key       = "base64:..."
+app_env       = "production"
+app_debug     = false
+app_url       = "http://your-alb.com/"
+
+redis_client      = "phpredis"
+redis_password    = ""
+redis_port        = 6379
+
+mail_mailer       = "log"  # disables real email sending

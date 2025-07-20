@@ -52,18 +52,6 @@ resource "aws_ecs_task_definition" "app" {
           value = var.app_url
         },
         {
-          name  = "CACHE_DRIVER"
-          value = var.cache_driver
-        },
-        {
-          name  = "SESSION_DRIVER"
-          value = var.session_driver
-        },
-        {
-          name  = "QUEUE_CONNECTION"
-          value = var.queue_connection
-        },
-        {
           name  = "REDIS_CLIENT"
           value = var.redis_client
         },

@@ -41,9 +41,6 @@ module "ecs" {
   alb_sg_id          = aws_security_group.alb_sg.id
   ecs_sg_id          = aws_security_group.ecs_sg.id
   app_key            = var.app_key
-  cache_driver       = var.cache_driver
-  session_driver     = var.session_driver
-  queue_connection   = var.queue_connection
   redis_client       = var.redis_client
   redis_password     = var.redis_password
   redis_port         = var.redis_port
