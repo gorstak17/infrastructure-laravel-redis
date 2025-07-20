@@ -20,5 +20,6 @@ module "this" {
   tags = {
     Environment = var.env
     Application = var.app_name
+    Owner       = "Aleksandar"
   }
 }

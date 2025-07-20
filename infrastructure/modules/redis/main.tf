@@ -37,6 +37,7 @@ resource "aws_elasticache_replication_group" "redis" {
 
   tags = {
     Environment = var.env
+    Owner       = "Aleksandar"
   }
 }
 

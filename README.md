@@ -129,6 +129,7 @@ app_key        = "base64:xxxxx"   # <-- Paste here
 ```
 
 > ⚠️ **Do not commit** `terraform.tfvars`.
+> 📌 **TODO:** In the future, consider implementing an automated key rotation mechanism for `APP_KEY`.
 
 ---
 
