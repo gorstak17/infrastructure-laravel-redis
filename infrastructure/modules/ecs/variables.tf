@@ -70,6 +70,21 @@ variable "redis_port" {
   description = "Redis port"
   type        = number
 }
+
+variable "cache_driver" {
+  description = "Laravel cache driver"
+  type        = string
+}
+
+variable "session_driver" {
+  description = "Laravel session driver"
+  type        = string
+}
+
+variable "queue_connection" {
+  description = "Laravel queue connection"
+  type        = string
+}
 variable "mail_mailer" {
   description = "Mail driver"
   type        = string

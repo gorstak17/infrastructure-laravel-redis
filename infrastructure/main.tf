@@ -45,6 +45,9 @@ module "ecs" {
   redis_password     = var.redis_password
   redis_port         = var.redis_port
   app_name           = var.app_name
+  cache_driver       = var.cache_driver
+  session_driver     = var.session_driver
+  queue_connection   = var.queue_connection
   redis_sg_id        = aws_security_group.redis_sg.id
   app_env            = var.app_env
   app_debug          = var.app_debug

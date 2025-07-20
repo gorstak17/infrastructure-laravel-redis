@@ -68,6 +68,18 @@ resource "aws_ecs_task_definition" "app" {
           value = ""
         },
         {
+          name  = "CACHE_DRIVER"
+          value = var.cache_driver
+        },
+        {
+          name  = "SESSION_DRIVER"
+          value = var.session_driver
+        },
+        {
+          name  = "QUEUE_CONNECTION"
+          value = var.queue_connection
+        },
+        {
           name  = "MAIL_MAILER"
           value = var.mail_mailer
         }

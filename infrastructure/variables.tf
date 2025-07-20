@@ -74,6 +74,24 @@ variable "redis_port" {
   type        = number
   default     = 6379
 }
+
+variable "cache_driver" {
+  description = "Laravel cache driver"
+  type        = string
+  default     = "redis"
+}
+
+variable "session_driver" {
+  description = "Laravel session driver"
+  type        = string
+  default     = "redis"
+}
+
+variable "queue_connection" {
+  description = "Laravel queue connection"
+  type        = string
+  default     = "redis"
+}
 variable "mail_mailer" {
   description = "Mail driver (smtp, log, etc.)"
   type        = string
