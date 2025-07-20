@@ -56,37 +56,6 @@ variable "app_url" {
   description = "Laravel APP_URL"
   type        = string
 }
-
-variable "cache_driver" {
-  description = "Laravel cache driver"
-  type        = string
-}
-
-variable "session_driver" {
-  description = "Laravel session driver"
-  type        = string
-}
-
-variable "queue_connection" {
-  description = "Laravel queue connection"
-  type        = string
-}
-
-variable "redis_client" {
-  description = "Redis client for Laravel"
-  type        = string
-}
-
-variable "redis_password" {
-  description = "Redis password if enabled"
-  type        = string
-}
-
-variable "redis_port" {
-  description = "Redis port"
-  type        = number
-}
-
 variable "mail_mailer" {
   description = "Mail driver"
   type        = string

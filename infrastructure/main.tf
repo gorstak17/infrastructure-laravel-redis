@@ -46,12 +46,6 @@ module "ecs" {
   app_env            = var.app_env
   app_debug          = var.app_debug
   app_url            = var.app_url
-  cache_driver       = var.cache_driver
-  session_driver     = var.session_driver
-  queue_connection   = var.queue_connection
-  redis_client       = var.redis_client
-  redis_password     = var.redis_password
-  redis_port         = var.redis_port
   mail_mailer        = var.mail_mailer
 }
 
