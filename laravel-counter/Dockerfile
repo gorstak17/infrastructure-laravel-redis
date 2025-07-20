@@ -19,9 +19,6 @@ COPY . .
 RUN composer install --optimize-autoloader --no-dev
 
 
-RUN php artisan config:clear && php artisan route:clear && php artisan view:clear
-
-
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
