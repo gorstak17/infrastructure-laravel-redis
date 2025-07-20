@@ -1,0 +1,6 @@
+areas for improvement: 
+automated app key rotation
+auto scaling policies for ecs based on cpu
+alerts on failures
+storing state file to s3
+cicd infra provisioning in the separated pipeline
