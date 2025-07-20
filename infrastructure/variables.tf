@@ -98,8 +98,3 @@ variable "mail_mailer" {
   type        = string
   default     = "log"
 }
-
-variable "redis_endpoint" {
-  description = "ElastiCache Redis primary endpoint"
-  type        = string
-}

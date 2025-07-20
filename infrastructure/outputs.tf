@@ -7,7 +7,7 @@ output "alb_dns_name" {
 }
 
 output "redis_endpoint" {
-  value = module.redis.redis_endpoint
+  value = module.redis.redis_primary_endpoint
 }
 
 output "alb_sg_id" {

@@ -77,11 +77,6 @@ variable "redis_client" {
   type        = string
 }
 
-variable "redis_endpoint" {
-  description = "Redis host endpoint"
-  type        = string
-}
-
 variable "redis_password" {
   description = "Redis password if enabled"
   type        = string

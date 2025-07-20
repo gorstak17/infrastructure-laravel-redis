@@ -3,7 +3,6 @@ app_env        = "production"
 app_debug      = false
 app_url        = "http://your-alb-dns/"
 app_debug      = false
-app_key        = "base64:your-app-key-goes-here"
 aws_region     = "us-east-1"
 cache_driver     = "redis"
 session_driver   = "redis"

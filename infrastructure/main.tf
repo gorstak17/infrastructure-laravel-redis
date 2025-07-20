@@ -41,7 +41,6 @@ module "ecs" {
   alb_sg_id          = aws_security_group.alb_sg.id
   ecs_sg_id          = aws_security_group.ecs_sg.id
   app_key            = var.app_key
-  redis_endpoint     = var.redis_endpoint
   app_name           = var.app_name
   redis_sg_id        = aws_security_group.redis_sg.id
   app_env            = var.app_env
@@ -54,6 +53,5 @@ module "ecs" {
   redis_password     = var.redis_password
   redis_port         = var.redis_port
   mail_mailer        = var.mail_mailer
-
 }
 

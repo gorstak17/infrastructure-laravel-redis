@@ -5,7 +5,8 @@ resource "aws_ssm_parameter" "app_key" {
 }
 
 resource "aws_ssm_parameter" "redis_endpoint" {
-  name  = "/laravel-counter/redis_endpoint"
-  type  = "String"
-  value = var.redis_endpoint
+  name      = "/laravel-counter/redis_endpoint"
+  type      = "String"
+  value     = module.redis.redis_primary_endpoint
+  overwrite = true
 }
