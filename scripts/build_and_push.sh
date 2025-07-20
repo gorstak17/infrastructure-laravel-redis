@@ -28,4 +28,4 @@ aws ecs update-service \
   --force-new-deployment \
   --region ${AWS_REGION}
 
-echo "Deployment complete and service stable!"
+echo "Deployment complete!"
