@@ -12,9 +12,12 @@ export REDIS_HOST=$(aws ssm get-parameter --name "/laravel-counter/redis_endpoin
 #   exit 1
 # fi
 
-echo "Updating .env with runtime values..."
-sed -i "s|^APP_KEY=.*|APP_KEY=${APP_KEY}|" .env
-sed -i "s|^REDIS_HOST=.*|REDIS_HOST=${REDIS_HOST}|" .env
+echo "→ APP_KEY is now: $APP_KEY"
+echo "→ REDIS_HOST is now: $REDIS_HOST"
+
+# echo "Updating .env with runtime values..."
+# sed -i "s|^APP_KEY=.*|APP_KEY=${APP_KEY}|" .env
+# sed -i "s|^REDIS_HOST=.*|REDIS_HOST=${REDIS_HOST}|" .env
 
 echo "Clearing Laravel caches..."
 php artisan config:clear
